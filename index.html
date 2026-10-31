@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101827">
+<title>My Private Space</title>
+<style>
+:root{--bg:#0b1220;--panel:#131e30;--panel2:#19263a;--text:#eef4ff;--muted:#9aabc3;--line:#293951;--accent:#8bafff;--accent2:#b9ceff;--good:#8ee0bd;--danger:#ff9c9c}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 0%,#1c3150 0,transparent 42%),var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,textarea{font:inherit}button{cursor:pointer}.shell{width:min(940px,calc(100% - 32px));margin:0 auto;padding:48px 0}.brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}.mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#9bbaff,#6b83df);display:grid;place-items:center;color:#101827;font-weight:900;font-size:20px}.brand strong{font-size:17px;letter-spacing:.2px}.brand small{display:block;color:var(--muted);font-size:12px}.card{background:rgba(19,30,48,.94);border:1px solid var(--line);border-radius:22px;padding:clamp(22px,5vw,38px);box-shadow:0 22px 70px #0005}.auth{max-width:440px;margin:8vh auto}.eyebrow{color:var(--accent2);text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:800}.auth h1,.heading h1{font-size:clamp(28px,5vw,38px);line-height:1.12;margin:10px 0}.muted{color:var(--muted)}label{display:block;font-size:13px;color:#c7d4e8;margin:18px 0 7px}input,textarea{width:100%;background:#0c1524;border:1px solid #34455f;border-radius:12px;padding:13px 14px;color:var(--text);outline:none}input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px #8bafff20}button{border:0;border-radius:12px;padding:12px 17px;background:var(--accent);color:#101827;font-weight:750}button:hover{filter:brightness(1.08)}.primary{width:100%;margin-top:18px}.ghost{background:#24334a;color:var(--text);border:1px solid #34455f}.error{color:var(--danger);font-size:13px;min-height:20px;margin-top:9px}.hint{font-size:12px;color:var(--muted);margin-top:16px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:25px}.heading p{margin:8px 0 0;color:var(--muted)}.actions{display:flex;gap:8px;flex-wrap:wrap}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.section-title{font-size:16px;margin:0 0 5px}.section-sub{font-size:12px;color:var(--muted);margin:0 0 15px}.tile{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:21px}.tile textarea{min-height:190px;resize:vertical}.todo-row{display:flex;gap:9px;margin-bottom:12px}.todo-row input{flex:1;min-width:0}.todo-list{list-style:none;padding:0;margin:14px 0 0}.todo-list li{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);color:#dce7f7}.todo-list li span{flex:1;overflow-wrap:anywhere}.todo-list li.done span{text-decoration:line-through;color:var(--muted)}.todo-list input{width:17px;height:17px;accent-color:var(--accent)}.delete{background:transparent;color:var(--muted);padding:4px 8px}.status{font-size:12px;color:var(--good);min-height:18px;margin-top:8px}.footer{color:#74849c;font-size:11px;text-align:center;margin-top:24px}.hidden{display:none!important}@media(max-width:680px){.shell{padding:25px 0}.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.auth{margin:5vh auto}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="brand"><div class="mark">M</div><div><strong>My Private Space</strong><small>A little space for your day</small></div></div>
+
+  <section id="authCard" class="card auth">
+    <div class="eyebrow" id="authEyebrow">Private access</div>
+    <h1 id="authTitle">Welcome back.</h1>
+    <p class="muted" id="authDescription">Enter your password to open your personal space.</p>
+    <form id="authForm">
+      <label for="password" id="passwordLabel">Password</label>
+      <input id="password" type="password" autocomplete="current-password" placeholder="Enter your password" required minlength="4">
+      <div id="confirmWrap" class="hidden"><label for="confirmPassword">Confirm password</label><input id="confirmPassword" type="password" autocomplete="new-password" placeholder="Enter it again" minlength="4"></div>
+      <button class="primary" id="authButton" type="submit">Unlock my space</button>
+      <div class="error" id="authError" role="alert"></div>
+    </form>
+    <p class="hint" id="authHint">First time here? You'll create your own password on this device.</p>
+  </section>
+
+  <section id="app" class="hidden">
+    <div class="top">
+      <div class="heading"><div class="eyebrow">Your personal dashboard</div><h1 id="greeting">Hello 👋</h1><p id="today"></p></div>
+      <div class="actions"><button class="ghost" id="changeBtn">Change password</button><button class="ghost" id="lockBtn">Lock space</button></div>
+    </div>
+    <div class="grid">
+      <section class="tile">
+        <h2 class="section-title">My notes</h2><p class="section-sub">Write down thoughts, ideas or reminders.</p>
+        <textarea id="notes" placeholder="Start writing here..."></textarea><div class="status" id="notesStatus" aria-live="polite">Saved on this device</div>
+      </section>
+      <section class="tile">
+        <h2 class="section-title">To-do list</h2><p class="section-sub">Small steps make a good day.</p>
+        <form id="todoForm" class="todo-row"><input id="todoInput" placeholder="Add a task..." maxlength="120" aria-label="New task"><button type="submit">Add</button></form>
+        <ul class="todo-list" id="todoList"></ul>
+        <div class="status" id="todoStatus" aria-live="polite"></div>
+      </section>
+    </div>
+    <p class="footer">Your notes and tasks stay in this browser on this device. Lock the page when you step away.</p>
+  </section>
+  <p class="footer" id="globalFooter">Personal use • No account required</p>
+</main>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const KEY = 'myPrivateSpace.passwordHash.v1';
+  const NOTES = 'myPrivateSpace.notes.v1';
+  const TODOS = 'myPrivateSpace.todos.v1';
+  let todos = [];
+  let setup = !localStorage.getItem(KEY);
+
+  async function hash(value) {
+    const bytes = new TextEncoder().encode(value);
+    const digest = await crypto.subtle.digest('SHA-256', bytes);
+    return [...new Uint8Array(digest)].map(x => x.toString(16).padStart(2,'0')).join('');
+  }
+  function configureAuth() {
+    setup = !localStorage.getItem(KEY);
+    $('authEyebrow').textContent = setup ? 'Set up your private space' : 'Private access';
+    $('authTitle').textContent = setup ? 'Create your password.' : 'Welcome back.';
+    $('authDescription').textContent = setup ? 'Choose a password with at least 4 characters.' : 'Enter your password to open your personal space.';
+    $('authButton').textContent = setup ? 'Create password' : 'Unlock my space';
+    $('confirmWrap').classList.toggle('hidden', !setup);
+    $('password').value = ''; $('confirmPassword').value = ''; $('authError').textContent = '';
+    $('password').autocomplete = setup ? 'new-password' : 'current-password';
+    $('authHint').textContent = setup ? 'Your password is saved only in this browser.' : 'Your personal space is locked.';
+    $('authCard').classList.remove('hidden'); $('app').classList.add('hidden');
+  }
+  function showApp() {
+    $('authCard').classList.add('hidden'); $('app').classList.remove('hidden');
+    const now = new Date();
+    $('today').textContent = now.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    $('notes').value = localStorage.getItem(NOTES) || '';
+    try { todos = JSON.parse(localStorage.getItem(TODOS) || '[]'); } catch { todos = []; }
+    renderTodos();
+  }
+  $('authForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const pass = $('password').value;
+    if (pass.length < 4) { $('authError').textContent = 'Please use at least 4 characters.'; return; }
+    if (setup) {
+      if (pass !== $('confirmPassword').value) { $('authError').textContent = 'The passwords do not match.'; return; }
+      localStorage.setItem(KEY, await hash(pass)); showApp();
+    } else {
+      if (await hash(pass) !== localStorage.getItem(KEY)) { $('authError').textContent = 'That password is not correct. Try again.'; return; }
+      showApp();
+    }
+  });
+  $('lockBtn').addEventListener('click', configureAuth);
+  $('changeBtn').addEventListener('click', async () => {
+    const current = prompt('Enter your current password:');
+    if (current === null) return;
+    if (await hash(current) !== localStorage.getItem(KEY)) { alert('Current password is incorrect.'); return; }
+    const next = prompt('Enter a new password (at least 4 characters):');
+    if (next === null) return;
+    if (next.length < 4) { alert('Password must have at least 4 characters.'); return; }
+    const confirm = prompt('Enter the new password again:');
+    if (next !== confirm) { alert('The passwords do not match.'); return; }
+    localStorage.setItem(KEY, await hash(next)); alert('Password changed on this device.');
+  });
+  let saveTimer;
+  $('notes').addEventListener('input', () => {
+    $('notesStatus').textContent = 'Saving...';
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      localStorage.setItem(NOTES, $('notes').value);
+      $('notesStatus').textContent = 'Saved on this device';
+    }, 250);
+  });
+  function renderTodos() {
+    $('todoList').replaceChildren();
+    todos.forEach((todo,index) => {
+      const li = document.createElement('li'); if (todo.done) li.classList.add('done');
+      const check = document.createElement('input'); check.type = 'checkbox'; check.checked = !!todo.done; check.setAttribute('aria-label','Mark task complete');
+      check.addEventListener('change', () => { todos[index].done = check.checked; saveTodos(); renderTodos(); });
+      const span = document.createElement('span'); span.textContent = todo.text;
+      const del = document.createElement('button'); del.type = 'button'; del.className = 'delete'; del.textContent = 'Remove'; del.setAttribute('aria-label','Remove task');
+      del.addEventListener('click', () => { todos.splice(index,1); saveTodos(); renderTodos(); });
+      li.append(check,span,del); $('todoList').append(li);
+    });
+    if (!todos.length) $('todoList').innerHTML = '<li class="muted">No tasks yet. Add one above.</li>';
+  }
+  function saveTodos() { localStorage.setItem(TODOS,JSON.stringify(todos)); $('todoStatus').textContent = 'List saved'; }
+  $('todoForm').addEventListener('submit', e => {
+    e.preventDefault(); const value = $('todoInput').value.trim(); if (!value) return;
+    todos.push({text:value,done:false}); $('todoInput').value = ''; saveTodos(); renderTodos();
+  });
+  configureAuth();
+})();
+</script>
+</body>
+</html>
